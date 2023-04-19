@@ -1,26 +1,154 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <NavBar class="navbar" />
+    <div class="headers">
+      <HeaderInbox class="header-inbox" @user-selected="userSelected" />
+      <HeaderChat class="header-chat" :active-user="activeUser" :other-user="otherUser" />
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderInbox from './components/HeaderInbox.vue'
+import HeaderChat from './components/HeaderChat.vue'
+import NavBar from './components/NavBar.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    HeaderInbox,
+    HeaderChat,
+    NavBar   
+  },
+  data() {
+    return {
+      activeUser: null,
+    };
+  },
+  methods: {
+    userSelected(user) {
+      this.activeUser = user;
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.navbar {
+  background-color: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.headers {
+  display: flex;
+  flex: 1;
+}
+
+.header-inbox {
+  flex: 1;
+  border: 1px solid steelblue;
+  width: 30%;
+  overflow: auto;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.header-chat {
+  flex: 2;
+  border: 1px solid steelblue;
+  width: 70%;
+  overflow: auto;
+  border-radius: 10px;
+}
+
+.user.active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.avatar.active {
+  background-color: steelblue;
+}
+
+.chat {
+  margin: 20px;
+}
+
+.chat .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat .header .name {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.chat .messages {
+  height: 70vh;
+  overflow: auto;
+}
+
+.chat .messages .message {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.chat .messages .message.sent {
+  align-self: flex-end;
+  background-color: steelblue;
+  color: white;
+}
+
+.chat .message-input {
+  margin-top: 10px;
+  display: flex;
+}
+
+.chat .message-input input {
+  flex: 1;
+  margin-right: 10px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.chat .message-input button {
+  border: none;
+  border-radius: 10px;
+  background-color: steelblue;
+  color: white;
+  padding: 10px 20px;
 }
 </style>
+
+
