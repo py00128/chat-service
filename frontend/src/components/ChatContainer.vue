@@ -50,6 +50,12 @@
     border-radius: 20px;
     top: 27%;
     right: 1%;
+    transition: color 0.2s;
+}
+
+#chat-input svg:hover{
+    cursor: pointer;
+    color: rgb(39, 126, 240);
 }
 
 
