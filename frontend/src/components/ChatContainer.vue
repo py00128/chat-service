@@ -4,7 +4,7 @@
 
         </div>
         <div id="chat-input">
-            <input type="text">
+            <input type="text" placeholder="Send a message...">
             <font-awesome-icon :icon="['fas', 'paper-plane']" />
         </div>
     </div>
