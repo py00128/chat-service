@@ -1,25 +1,27 @@
 <template>
   <div class="container">
     <NavBar class="navbar" />
-    <div class="headers">
-      <HeaderInbox class="header-inbox" @user-selected="userSelected" />
-      <HeaderChat class="header-chat" :active-user="activeUser" :other-user="otherUser" />
+    <div class="content-container">
+      <InboxContainer />
+      <ChatContainer />
     </div>
   </div>
 </template>
 
 <script>
-import HeaderInbox from './components/HeaderInbox.vue'
-import HeaderChat from './components/HeaderChat.vue'
+/*import HeaderInbox from './components/HeaderInbox.vue'
+import HeaderChat from './components/HeaderChat.vue'*/
+import InboxContainer from './components/InboxContainer.vue';
+import ChatContainer from './components/ChatContainer.vue'
 import NavBar from './components/NavBar.vue'
 
 export default {
   name: 'App',
   components: {
-    HeaderInbox,
-    HeaderChat,
-    NavBar   
-  },
+    NavBar,
+    InboxContainer,
+    ChatContainer
+},
   data() {
     return {
       activeUser: null,
@@ -37,20 +39,14 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
 }
 
 .navbar {
@@ -61,6 +57,13 @@ body {
   justify-content: space-between;
   padding: 0 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.content-container{
+    width: 100vw;
+    height: 100%;
+    background: rgb(236, 236, 236);
+    display: flex;
 }
 
 .headers {
