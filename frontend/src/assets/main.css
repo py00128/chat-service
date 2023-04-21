@@ -1,0 +1,7 @@
+@import './base.css';
+
+#app {
+  max-width: 100%;
+  font-weight: normal;
+  background: rgb(236, 236, 236);
+}
