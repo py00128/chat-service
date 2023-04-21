@@ -31,6 +31,9 @@ const inboxSchema = new mongoose.Schema({
     },
     messages : {
         type: [messageSchema],
-        required: true  
+        required: true,
+        default: []
     }
 });
+
+module.exports = mongoose.model('conversations', inboxSchema)
