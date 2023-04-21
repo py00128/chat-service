@@ -1,20 +1,36 @@
 const express = require('express')
 const router = express.Router()
+const Conversation = require('../models/inbox')
 
 // Getting all conversations
-router.get('/', (req, res) =>{
-    res.send("Hello World")
+router.get('/', async (req, res) =>{
+    try {
+        const conversations = await Conversation.find();
+        res.json(conversations)
+    } catch (err){
+        res.status(500).json({error: err.message })
+    }
 })
+
 // Getting one conversation
-router.get('/:id', (req, res) =>{
-    //accessing params
-    //req.params.id
-    res.send(req.params.id)
+router.get('/:id', getConversation,(req, res) =>{
+    res.send(res.conversation)
 })
-// Creating a conversation ( Contact seller ect.)
-router.post('/',(req, res) =>{
-    //accessing params
-    //req.params.id
+
+// Creating a conversation ( via Contact seller from Listing microservice)
+router.post('/', async (req, res) => {
+    const conversation = new Conversation({
+        conversationID : req.body.conversationID,
+        itemName : req.body.itemName,
+        itemSrc : req.body.itemSrc,
+        messages: []
+    })
+    try{
+        const newConversation = await conversation.save();
+        res.status(201).json(newConversation);
+    }catch(err){
+        res.status(400).json({error: err.message})
+    }
 })  
 
 // Update conversation (add messages)
@@ -22,6 +38,19 @@ router.patch('/', (req, res) => {
     
 })
 
-// Deleting conversation
+async function getConversation(req,res, next) {
+    let conversation
+    try {
+        conversation = await Conversation.findById(req.params.id)
+        if (conversation == null){
+            return res.status(404).json({ message: 'Cannot find conversation'})
+        }
+    } catch (err) {
+        return res.status(500).json({ error: err.message})
+    }
+
+    res.conversation = conversation
+    next()
+}
 
 module.exports=router
