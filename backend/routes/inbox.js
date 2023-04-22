@@ -12,6 +12,20 @@ router.get('/', async (req, res) =>{
     }
 })
 
+//api call for retriving conversation with id 
+router.get('/conversations/:id', (req, res) => {
+    var conversationId = req.params.id;
+    Conversations.findOne({ conversationID: conversationId }, 'messages', (err, conversation) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send(err);
+      } else {
+        console.log(conversation);
+        res.send(conversation.messages);
+      }
+    });
+  });
+
 // Getting one conversation
 router.get('/:id', getConversation,(req, res) =>{
     res.send(res.conversation)

@@ -1,48 +1,72 @@
 <template>
-     <div id="chat-container">
-        <div id="chat-content">
-
+    <div id="chat-container">
+      <div id="chat-content">
+        <div v-for="(message, index) in messages" :key="index" :class="{ 'sent-message': message.sender === 'me', 'received-message': message.sender !== 'me' }">
+          <p>{{ message.message }}</p>
         </div>
-        <div id="chat-input">
-            <input type="text" placeholder="Send a message...">
-            <font-awesome-icon :icon="['fas', 'paper-plane']" />
-        </div>
+      </div>
+      <div id="chat-input">
+        <input type="text" placeholder="Send a message...">
+        <font-awesome-icon :icon="['fas', 'paper-plane']" />
+      </div>
     </div>
-</template>
-
-<style scoped>
-#chat-container{
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
+    name: 'ChatContainer',
+    data() {
+      return {
+        messages: []
+      }
+    },
+    mounted() {
+      // Make the API call to retrieve the messages
+      axios.get('http://localhost:3000/inbox/6443318a8c2f14b6791e7318')
+        .then(response => {
+          this.messages = response.data.messages;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
+  </script>
+  
+  <style scoped>
+  #chat-container {
     width: 75%;
     height: 100%;
     margin: 10px;
     background-color: white;
     border-radius: 5px;
-
     overflow: hidden;
-}
-
-#chat-input{
+  }
+  
+  #chat-input {
     width: 100%;
     height: 100%;
     background-color: black;
     height: 50px;
     display: flex;
     position: relative;
-}
-
-#chat-input input{
+  }
+  
+  #chat-input input {
     width: 100%;
     border-radius: 50px;
     margin: 10px;
     padding-left: 10px;
     padding-right: 30px;
-}
-
-#chat-input input:focus{
+  }
+  
+  #chat-input input:focus {
     outline: none;
-}
-
-#chat-input svg{
+  }
+  
+  #chat-input svg {
     position: absolute;
     color: white;
     background-color: black;
@@ -51,15 +75,34 @@
     top: 27%;
     right: 1%;
     transition: color 0.2s;
-}
-
-#chat-input svg:hover{
+  }
+  
+  #chat-input svg:hover {
     cursor: pointer;
     color: rgb(39, 126, 240);
-}
-
-
-#chat-content{
+  }
+  
+  #chat-content {
     height: 75vh;
-}
-</style>
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  
+  .sent-message {
+    margin: 5px 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #dcf8c6;
+    align-self: flex-end;
+  }
+  
+  .received-message {
+    margin: 5px 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+    align-self: flex-start;
+  }
+  </style>
+  
