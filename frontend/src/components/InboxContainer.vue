@@ -1,3 +1,25 @@
+<script>
+import axios from 'axios';
+
+export default{
+    data() {
+        return {
+            conversationData: ["hello world","hello"]
+        }
+    },
+    mounted(){
+        console.log("inbox has been mounted")
+        axios.get('http://localhost:3000/userConversations/64481c51b2c38c08980e063c').then(response => {
+            this.conversationData = response.data.conversations;
+            console.log(this.conversationData);
+        }).catch(error =>{
+            console.error(error)
+        });
+    }
+}
+</script>
+
+
 <template>
     <div id="inbox-container">
         <div id="inbox-header">
@@ -5,7 +27,9 @@
             <font-awesome-icon :icon="['fas', 'inbox']" />
         </div>
         <div id="inbox-content">
-
+            <ul>
+                <li v-for="conversation in conversationData" :key="conversation">{{ conversation}}</li>
+            </ul>
         </div>
     </div>
 </template>
@@ -47,7 +71,4 @@
 #inbox-content{
     height: 75vh;
 }
-
-
-
 </style>

@@ -4,7 +4,13 @@ require('dotenv').config()
 //imports
 const mongoose = require('mongoose')
 const express = require('express')
+const cors = require('cors')
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:8080',
+    methods: ['GET', 'POST']
+}));
 
 //connect to our database
 mongoose.connect(process.env.DATABASE_URL);
@@ -18,6 +24,9 @@ app.use(express.json())
 // importing route so we can redirect api calls
 const inboxRouter = require('./routes/inbox')
 app.use('/inbox', inboxRouter)
+
+const userConversationRouter = require('./routes/userConversations')
+app.use('/userConversations',userConversationRouter)
 
 // this port is listening for any request from the front-end
 app.listen(3000, () => console.log('Server has started'));
