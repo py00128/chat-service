@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const UserConversation = require('../models/userConversations')
+const Conversation = require('../models/inbox')
+
 
 // Getting all conversations
 router.get('/', async (req, res) =>{
@@ -13,10 +15,28 @@ router.get('/', async (req, res) =>{
 })
 
 // Getting one conversation
-router.get('/:id', getConversation,(req, res) =>{
-    console.log("inbox mounting...")
-    res.json({ "conversations": res.conversation.conversations });
-})
+router.get('/:id', getConversationIDs, async (req, res) =>{
+    try{
+        const listOfIds = res.conversation;
+        const conversations = await getConversations(listOfIds);
+        console.log(conversations);
+
+        const conversationProps = conversations.map((conversation) =>{
+            return{
+              _id: conversation._id,
+              itemName: conversation.itemName,
+              itemSrc: conversation.itemSrc  
+            };
+        });
+
+
+        res.json({ "conversations": conversationProps });
+    } catch (error){
+        console.error(error);
+        res.status(500).json({error:'Internal Error'})
+    }
+    
+});
 
 /*
 // Creating a conversation ( via Contact seller from Listing microservice)
@@ -40,20 +60,27 @@ router.post('/', async (req, res) => {
 router.patch('/', (req, res) => {
     
 })*/
+async function getConversations(listOfIds){
+    const data = await Conversation.find({_id: {$in:listOfIds}});
+    return data;
+}
 
-async function getConversation(req,res, next) {
-    let conversation
+async function getConversationIDs(req,res, next) {
+    let conversationObj;
+    let conversationHeaderObj;
+    let listOfConversationHeaderProps = [];
+    
     try {
-        conversation = await UserConversation.findById(req.params.id)
-        if (conversation == null){
+        conversationObj = await UserConversation.findById(req.params.id)
+        if (conversationObj == null){
             return res.status(404).json({ message: 'Cannot find conversation'})
         }
     } catch (err) {
         return res.status(500).json({ error: err.message})
     }
 
-    res.conversation = conversation
-    next()
+    res.conversation = conversationObj.conversations;
+    next();
 }
 
 module.exports=router

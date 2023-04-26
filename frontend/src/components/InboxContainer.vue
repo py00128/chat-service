@@ -1,7 +1,11 @@
 <script>
 import axios from 'axios';
-
+import ConversationHeader from './ConversationHeader.vue';
 export default{
+    name: 'InboxContainer',
+    components:{
+        ConversationHeader
+    },
     data() {
         return {
             conversationData: ["hello world","hello"]
@@ -17,6 +21,7 @@ export default{
         });
     }
 }
+
 </script>
 
 
@@ -28,7 +33,7 @@ export default{
         </div>
         <div id="inbox-content">
             <ul>
-                <li v-for="conversation in conversationData" :key="conversation">{{ conversation}}</li>
+                <li v-for="conversation in conversationData" :key="conversation._id"><ConversationHeader :itemName=conversation.itemName :itemSrc=conversation.itemSrc /></li>
             </ul>
         </div>
     </div>
