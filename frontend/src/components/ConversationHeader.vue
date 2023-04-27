@@ -1,5 +1,5 @@
 <template>
-    <div class="item-container">
+    <div :class="conversationHeaderClass" @click="handleClick">
         <div class="item-name-container"><h1>{{ itemName }}</h1></div>
         <div class="item-image-container"><img class="item-image" :src="itemSrc" /></div>
     </div>
@@ -17,25 +17,45 @@
         type: String,
         default: ''
       }
+    },
+    data() {
+      return{
+      conversationHeaderClass : "item-container-inactive"
+    }
+    },
+    methods:{
+      
+      handleClick(){
+        console.log(`Conversation about ${this.itemName} needs to load into chat...`)
+        this.conversationHeaderClass = "item-container-active";
+      }
     }
   }
 </script>
 
 <style scoped>
-.item-container{
+.item-container-inactive{
     display: flex;
     vertical-align: middle;
     justify-content: center;
     transition: background-color 0.35s;
 }
-.item-container:hover{
-    background-color: rgb(0, 0, 0);
-    color: white;
+.item-container-inactive:hover{
+    background-color: rgb(175, 175, 175);
+    color: rgb(0, 0, 0);
     cursor: pointer;
 }
 
-.item-container h1:hover{
-    color: white;
+.item-container-inactive h1:hover{
+    color: rgb(0, 0, 0);
+}
+.item-container-active{
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+  background-color: rgb(29, 29, 29);
+  color: white;
+  transition: background-color 0.35s;
 }
 
 .item-name-container{

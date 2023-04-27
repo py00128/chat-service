@@ -8,8 +8,10 @@ export default{
     },
     data() {
         return {
-            conversationData: ["hello world","hello"]
+            conversationData: ["No new messages"],
         }
+    },
+    methods: {
     },
     mounted(){
         console.log("inbox has been mounted")
@@ -33,7 +35,7 @@ export default{
         </div>
         <div id="inbox-content">
             <ul>
-                <li v-for="conversation in conversationData" :key="conversation._id"><ConversationHeader :itemName=conversation.itemName :itemSrc=conversation.itemSrc /></li>
+                <li v-for="conversation in conversationData" :key="conversation._id"><ConversationHeader :itemName=conversation.itemName :itemSrc=conversation.itemSrc  /></li>
             </ul>
         </div>
     </div>
