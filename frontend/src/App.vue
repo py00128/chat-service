@@ -2,8 +2,8 @@
   <div class="container">
     <NavBar class="navbar" />
     <div class="content-container">
-      <InboxContainer />
-      <ChatContainer />
+      <InboxContainer :getConversationID=getConversationID />
+      <ChatContainer :conversationID=currentConversationID />
     </div>
   </div>
 </template>
@@ -25,12 +25,17 @@ export default {
   data() {
     return {
       activeUser: null,
+      currentConversationID: null
     };
   },
   methods: {
     userSelected(user) {
       this.activeUser = user;
     },
+    getConversationID(id){
+      this.currentConversationID = id;
+      console.log("response from app.vue")
+    }
   },
 };
 </script>

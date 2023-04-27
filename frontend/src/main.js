@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import {store} from './store/store'
 //import router from './router'
 
 // set up global styles
@@ -19,4 +20,7 @@ library.add(faInbox, faHeart, faShoppingBag, faPaperPlane)
 
 createApp(App)
   .component('font-awesome-icon',FontAwesomeIcon)
+  .use(store)
   .mount('#app')
+
+

@@ -11,7 +11,6 @@ const messageSchema = new mongoose.Schema({
     },
     timestamp : {
         type: Date,
-        required: true,
         default: Date.now    
     }
 });
@@ -31,8 +30,7 @@ const inboxSchema = new mongoose.Schema({
     },
     messages : {
         type: [messageSchema],
-        required: true,
-        default: []
+        required: true
     }
 });
 

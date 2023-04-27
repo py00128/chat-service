@@ -22,9 +22,32 @@
         messages: []
       }
     },
+    props: {
+      conversationID: String
+    },
+    watch: {
+      conversationID: function (){
+        this.getMessages();
+      }
+    },
+    methods : {
+      async getMessages(){
+        const currentConversation = this.conversationID;
+        const APICall = 'http://localhost:3000/inbox/' + currentConversation;
+        axios.get(APICall)
+        .then(response => {
+          this.messages = response.data.messages;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+    },
     mounted() {
+      const currentConversation = this.conversationID;
+      const APICall = 'http://localhost:3000/inbox/' + currentConversation;
       // Make the API call to retrieve the messages
-      axios.get('http://localhost:3000/inbox/6443318a8c2f14b6791e7318')
+      axios.get(APICall)
         .then(response => {
           this.messages = response.data.messages;
         })

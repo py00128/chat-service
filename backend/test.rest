@@ -1,4 +1,4 @@
-GET http://localhost:3000/Inbox/643f119ba038bb259dbde84d
+GET http://localhost:3000/Inbox/643f106ea038bb259dbde84c
 
 ###
 
@@ -6,17 +6,19 @@ POST http://localhost:3000/Inbox
 Content-Type: application/json
 
 {
-    "conversationID" : 1122334457,
-    "itemName": "Nintendo 64 Console - Japanese Import",
-    "itemSrc": "https://m.media-amazon.com/images/I/51Lh2WVlJIL._AC_.jpg",
+    "conversationID" : 1122334458,
+    "itemName": "Plastation 6",
+    "itemSrc": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fakket.com%2Fwp-content%2Fuploads%2F2019%2F08%2FSony-PlayStation-6-1.jpg&f=1&nofb=1&ipt=9674478769a9e1daca40f16bff4bd9e062fff8c5eeeec6acc2f870c23bc54f55&ipo=images",
+    "messages" : [
+        {"userID": 6, "message": "THIS IS FAKE"},
+        {"userID": 7, "message": "its not!!!"}
+    ]
 }
 
 ###
 
-POST http://localhost:3000/Inbox/
+GET http://localhost:3000/userConversations/64481c51b2c38c08980e063c
 
-{
-    "conversationID" : 1122334458,
-    "itemName" : "Nintendo SNES Console - Near mint",
-    "itemSrc" : "https://m.media-amazon.com/images/I/81SVwPdq3tL._AC_SX569_.jpg",
-}
+
+###
+

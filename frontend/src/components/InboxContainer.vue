@@ -1,3 +1,35 @@
+<script>
+import axios from 'axios';
+import ConversationHeader from './ConversationHeader.vue';
+export default{
+    name: 'InboxContainer',
+    components:{
+        ConversationHeader
+    },
+    data() {
+        return {
+            conversationData: ["No new messages"],
+        }
+    },
+    props:{
+        getConversationID: Function
+    },
+    methods: {
+    },
+    mounted(){
+        console.log("inbox has been mounted")
+        axios.get('http://localhost:3000/userConversations/64481c51b2c38c08980e063c').then(response => {
+            this.conversationData = response.data.conversations;
+            console.log(this.conversationData);
+        }).catch(error =>{
+            console.error(error)
+        });
+    }
+}
+
+</script>
+
+
 <template>
     <div id="inbox-container">
         <div id="inbox-header">
@@ -5,7 +37,9 @@
             <font-awesome-icon :icon="['fas', 'inbox']" />
         </div>
         <div id="inbox-content">
-
+            <ul>
+                <li v-for="conversation in conversationData" :key="conversation._id"><ConversationHeader :itemName=conversation.itemName :itemSrc=conversation.itemSrc @click="getConversationID(conversation._id)" /></li>
+            </ul>
         </div>
     </div>
 </template>
@@ -47,7 +81,4 @@
 #inbox-content{
     height: 75vh;
 }
-
-
-
 </style>
