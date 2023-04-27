@@ -11,6 +11,9 @@ export default{
             conversationData: ["No new messages"],
         }
     },
+    props:{
+        getConversationID: Function
+    },
     methods: {
     },
     mounted(){
@@ -35,7 +38,7 @@ export default{
         </div>
         <div id="inbox-content">
             <ul>
-                <li v-for="conversation in conversationData" :key="conversation._id"><ConversationHeader :itemName=conversation.itemName :itemSrc=conversation.itemSrc  /></li>
+                <li v-for="conversation in conversationData" :key="conversation._id"><ConversationHeader :itemName=conversation.itemName :itemSrc=conversation.itemSrc @click="getConversationID(conversation._id)" /></li>
             </ul>
         </div>
     </div>

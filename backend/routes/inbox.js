@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
         conversationID : req.body.conversationID,
         itemName : req.body.itemName,
         itemSrc : req.body.itemSrc,
-        messages: []
+        messages: req.body.messages
     })
     try{
         const newConversation = await conversation.save();
@@ -46,6 +46,7 @@ router.post('/', async (req, res) => {
         res.status(400).json({error: err.message})
     }
 })  
+
 
 // Update conversation (add messages)
 router.patch('/', (req, res) => {
