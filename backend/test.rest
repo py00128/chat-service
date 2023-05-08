@@ -22,3 +22,10 @@ GET http://localhost:3000/userConversations/64481c51b2c38c08980e063c
 
 ###
 
+POST http://localhost:3001/userConversations/sendMessage
+Content-Type: application/json
+
+{
+    "message": "test message #1",
+    "conversationID": "6457df78a66edf454552bef4"
+}
